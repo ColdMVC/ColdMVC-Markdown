@@ -62,8 +62,8 @@ component {
 						arrayAppend(table, "<thead>");
 						arrayAppend(table, "<tr>");
 
-
 						cells = listToArray(line, "|");
+
 						for (j = 1; j <= arrayLen(cells); j++) {
 
 							var cell = trim(cells[j]);
@@ -92,7 +92,7 @@ component {
 
 							cells = listToArray(line, "|");
 
-							for (j = 1; i <= headers; j++) {
+							for (j = 1; j <= headers; j++) {
 								arrayAppend(table, "<td>#trim(cells[j])#</td>");
 							}
 
