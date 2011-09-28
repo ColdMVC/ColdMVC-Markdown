@@ -1,5 +1,3 @@
 <cfif thisTag.executionMode eq "end">
-
-	<cfset thisTag.generatedContent = $.factory.get("markdownProcessor").markdown(thisTag.generatedContent) />
-
+	<cfset thisTag.generatedContent = coldmvc.factory.get("markdownProcessor").markdown(thisTag.generatedContent) />
 </cfif>

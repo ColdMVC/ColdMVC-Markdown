@@ -10,30 +10,29 @@ component {
 
 	public void function setup() {
 
-		javaLoader.add(getDirectoryFromPath(getCurrentTemplatePath()) & "../../lib/markdownj-1.0.2b4-0.3.0.jar");
+		variables.javaLoader.add(getDirectoryFromPath(getCurrentTemplatePath()) & "../../lib/markdownj-1.0.2b4-0.3.0.jar");
 
-		urlPath = config.get("urlPath");
+		variables.urlPath = config.get("urlPath");
 
 	}
 
 	public string function markdown(required string string) {
 
-		string = replace(string, "]: /", "]: #urlPath#/", "all");
-
-		string = replaceTables(string);
-		string = replaceDefinitionLists(string);
+		arguments.string = replace(arguments.string, "]: /", "]: #variables.urlPath#/", "all");
+		arguments.string = replaceTables(arguments.string);
+		arguments.string = replaceDefinitionLists(arguments.string);
 
 		var markdownProcessor = javaLoader.create("com.petebevin.markdown.MarkdownProcessor").init();
 
-		return markdownProcessor.markdown(string);
+		return markdownProcessor.markdown(arguments.string);
 
 	}
 
 	private string function replaceTables(required string string) {
 
-		if (find("|", string)) {
+		if (find("|", arguments.string)) {
 
-			var array = listToArray(string, chr(10));
+			var array = listToArray(arguments.string, chr(10));
 			var i = "";
 			var j = "";
 			var insideTable = false;
@@ -145,19 +144,19 @@ component {
 
 			}
 
-			string = rebuildString(string, tables);
+			arguments.string = rebuildString(arguments.string, tables);
 
 		}
 
-		return string;
+		return arguments.string;
 
 	}
 
 	private string function replaceDefinitionLists(required string string) {
 
-		if (find(":", string)) {
+		if (find(":", arguments.string)) {
 
-			var array = listToArray(string, chr(10));
+			var array = listToArray(arguments.string, chr(10));
 			var i = "";
 			var j = "";
 			var line = "";
@@ -227,26 +226,26 @@ component {
 
 			}
 
-			string = rebuildString(string, lists);
+			arguments.string = rebuildString(arguments.string, lists);
 
 		}
 
-		return string;
+		return arguments.string;
 
 	}
 
 	private string function rebuildString(required string string, required array items) {
 
-		var array = listToArray(string, chr(10));
+		var array = listToArray(arguments.string, chr(10));
 		var new = [];
 		var start = 1;
 		var end = 0;
 		var i = "";
 		var j = "";
 
-		for (i = 1; i <= arrayLen(items); i++) {
+		for (i = 1; i <= arrayLen(arguments.items); i++) {
 
-			var item = items[i];
+			var item = arguments.items[i];
 
 			if (item.start > start) {
 
