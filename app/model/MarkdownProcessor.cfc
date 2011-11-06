@@ -1,10 +1,13 @@
 /**
  * @accessors true
- * @initMethod setup
+ * @setupMethod setup
  * @singleton
  */
 component {
 
+	/**
+	 * @inject coldmvc
+	 */
 	property config;
 	property javaLoader;
 
@@ -12,7 +15,7 @@ component {
 
 		variables.javaLoader.add(getDirectoryFromPath(getCurrentTemplatePath()) & "../../lib/markdownj-1.0.2b4-0.3.0.jar");
 
-		variables.urlPath = config.get("urlPath");
+		variables.urlPath = variables.config.get("urlPath");
 
 	}
 
@@ -24,7 +27,7 @@ component {
 
 		var markdownProcessor = javaLoader.create("com.petebevin.markdown.MarkdownProcessor").init();
 
-		return markdownProcessor.markdown(arguments.string);
+		return trim(markdownProcessor.markdown(arguments.string));
 
 	}
 
